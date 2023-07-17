@@ -533,7 +533,7 @@ stat_negative = '#700000'
 stat_positive = '#028500'
 defend_var = 0
 loadouts = Loadouts([])
-round_var = 3
+round_var = 2
 font_var_default = ("Arial", 9)
 info_alert = tk.StringVar()
 info_alert.set('!: для 6 ячеек надо ~32гб оперативки')
