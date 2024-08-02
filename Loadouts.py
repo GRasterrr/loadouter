@@ -65,35 +65,50 @@ class Loadouts:
     def get_loadouts_by_health(self):
         return sorted(self.loadouts, key=lambda x: x.get_health(), reverse=True)
 
-    def get_loadouts_by_move_speed(self):
-        return sorted(self.loadouts, key=lambda x: x.get_move_speed(), reverse=True)
-
-    def get_loadouts_by_bullet_resistance(self):
-        return sorted(self.loadouts, key=lambda x: x.get_bullet_resistance(), reverse=True)
-
     def get_loadouts_by_health_regen(self):
         return sorted(self.loadouts, key=lambda x: x.get_health_regen(), reverse=True)
-
-    def get_loadouts_by_stamina(self):
-        return sorted(self.loadouts, key=lambda x: x.get_stamina(), reverse=True)
-
-    def get_loadouts_by_stamina_regen(self):
-        return sorted(self.loadouts, key=lambda x: x.get_stamina_regen(), reverse=True)
 
     def get_loadouts_by_effective_regen(self):
         return sorted(self.loadouts, key=lambda x: x.get_effective_regen(), reverse=True)
 
+    def get_loadouts_by_bullet_resistance(self):
+        return sorted(self.loadouts, key=lambda x: x.get_bullet_resistance(), reverse=True)
+
+    def get_loadouts_by_stamina(self):
+        return sorted(self.loadouts, key=lambda x: x.get_stamina(), reverse=True)
+
+    def get_loadouts_by_move_speed(self):
+        return sorted(self.loadouts, key=lambda x: x.get_move_speed(), reverse=True)
+
+    def get_loadouts_by_stamina_regen(self):
+        return sorted(self.loadouts, key=lambda x: x.get_stamina_regen(), reverse=True)
+
     def get_loadouts_by_rupture_def(self):
         return sorted(self.loadouts, key=lambda x: x.get_rupture_def(), reverse=True)
 
-    def get_loadout_by_move_speed(self):
-        return max(self.loadouts, key=lambda x: x.get_move_speed())
+    def get_loadouts_by_psi_def(self):
+        return sorted(self.loadouts, key=lambda x: x.get_psi_def(), reverse=True)
 
-    def get_loadout_by_bullet_resistance(self):
-        return max(self.loadouts, key=lambda x: x.get_bullet_resistance())
+    def get_loadouts_by_rad_def(self):
+        return sorted(self.loadouts, key=lambda x: x.get_rad_def(), reverse=True)
+
+    def get_loadouts_by_temperature_def(self):
+        return sorted(self.loadouts, key=lambda x: x.get_temperature_def(), reverse=True)
+
+    def get_loadouts_by_bio_def(self):
+        return sorted(self.loadouts, key=lambda x: x.get_bio_def(), reverse=True)
+
+    def get_loadouts_by_psi(self, defend=0):
+        return sorted(self.loadouts, key=lambda x: x.get_psi(defend=defend), reverse=True)
 
     def get_loadout_by_effective_regen(self):
         return max(self.loadouts, key=lambda x: x.get_effective_regen())
 
+    def get_loadout_by_bullet_resistance(self):
+        return max(self.loadouts, key=lambda x: x.get_bullet_resistance())
+
     def get_loadout_by_stamina(self):
         return max(self.loadouts, key=lambda x: x.get_stamina())
+
+    def get_loadout_by_move_speed(self):
+        return max(self.loadouts, key=lambda x: x.get_move_speed())

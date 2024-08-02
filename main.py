@@ -29,76 +29,51 @@ def get_size(obj, seen=None):
 
 
 def filter_changed(_):
+    for row in loadout_treeview.get_children():
+        loadout_treeview.delete(row)
+
     if filter_after_create.get() == 'Хп':
-        for row in loadout_treeview.get_children():
-            loadout_treeview.delete(row)
         loadouts.loadouts = loadouts.get_loadouts_by_health()
-        j = 1
-        for i in range(0, int(len(loadouts.loadouts))):
-            loadout_treeview.insert(parent='', index=i,
-                                    values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
-                                    tags=[loadouts.get_loadouts()[i]])
-            j = j + 1
-    if filter_after_create.get() == 'Скорость передвижения':
-        for row in loadout_treeview.get_children():
-            loadout_treeview.delete(row)
-        loadouts.loadouts = loadouts.get_loadouts_by_move_speed()
-        j = 1
-        for i in range(0, int(len(loadouts.loadouts))):
-            loadout_treeview.insert(parent='', index=i,
-                                    values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
-                                    tags=[loadouts.get_loadouts()[i]])
-            j = j + 1
-    if filter_after_create.get() == 'Пулестойкость':
-        for row in loadout_treeview.get_children():
-            loadout_treeview.delete(row)
-        loadouts.loadouts = loadouts.get_loadouts_by_bullet_resistance()
-        j = 1
-        for i in range(0, int(len(loadouts.loadouts))):
-            loadout_treeview.insert(parent='', index=i,
-                                    values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
-                                    tags=[loadouts.get_loadouts()[i]])
-            j = j + 1
-    if filter_after_create.get() == 'Эффективность лечения':
-        for row in loadout_treeview.get_children():
-            loadout_treeview.delete(row)
-        loadouts.loadouts = loadouts.get_loadouts_by_effective_regen()
-        j = 1
-        for i in range(0, int(len(loadouts.loadouts))):
-            loadout_treeview.insert(parent='', index=i,
-                                    values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
-                                    tags=[loadouts.get_loadouts()[i]])
-            j = j + 1
-    if filter_after_create.get() == 'Восстановление выносливости':
-        for row in loadout_treeview.get_children():
-            loadout_treeview.delete(row)
-        loadouts.loadouts = loadouts.get_loadouts_by_stamina_regen()
-        j = 1
-        for i in range(0, int(len(loadouts.loadouts))):
-            loadout_treeview.insert(parent='', index=i,
-                                    values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
-                                    tags=[loadouts.get_loadouts()[i]])
-            j = j + 1
-    if filter_after_create.get() == 'Выносливость':
-        for row in loadout_treeview.get_children():
-            loadout_treeview.delete(row)
-        loadouts.loadouts = loadouts.get_loadouts_by_stamina()
-        j = 1
-        for i in range(0, int(len(loadouts.loadouts))):
-            loadout_treeview.insert(parent='', index=i,
-                                    values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
-                                    tags=[loadouts.get_loadouts()[i]])
-            j = j + 1
+
     if filter_after_create.get() == 'Регенерация здоровья':
-        for row in loadout_treeview.get_children():
-            loadout_treeview.delete(row)
         loadouts.loadouts = loadouts.get_loadouts_by_health_regen()
-        j = 1
-        for i in range(0, int(len(loadouts.loadouts))):
-            loadout_treeview.insert(parent='', index=i,
-                                    values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
-                                    tags=[loadouts.get_loadouts()[i]])
-            j = j + 1
+
+    if filter_after_create.get() == 'Эффективность лечения':
+        loadouts.loadouts = loadouts.get_loadouts_by_effective_regen()
+
+    if filter_after_create.get() == 'Пулестойкость':
+        loadouts.loadouts = loadouts.get_loadouts_by_bullet_resistance()
+
+    if filter_after_create.get() == 'Выносливость':
+        loadouts.loadouts = loadouts.get_loadouts_by_stamina()
+
+    if filter_after_create.get() == 'Скорость передвижения':
+        loadouts.loadouts = loadouts.get_loadouts_by_move_speed()
+
+    if filter_after_create.get() == 'Восстановление выносливости':
+        loadouts.loadouts = loadouts.get_loadouts_by_stamina_regen()
+
+    if filter_after_create.get() == 'Защита от пси-излучения':
+        loadouts.loadouts = loadouts.get_loadouts_by_psi_def()
+
+    if filter_after_create.get() == 'Защита от радиации':
+        loadouts.loadouts = loadouts.get_loadouts_by_rad_def()
+
+    if filter_after_create.get() == 'Защита от температуры':
+        loadouts.loadouts = loadouts.get_loadouts_by_temperature_def()
+
+    if filter_after_create.get() == 'Защита от биозаражения':
+        loadouts.loadouts = loadouts.get_loadouts_by_bio_def()
+
+    if filter_after_create.get() == 'Пси-излучение':
+        loadouts.loadouts = loadouts.get_loadouts_by_psi(defend=float(entry_defend.get()))
+
+    j = 1
+    for i in range(0, int(len(loadouts.loadouts))):
+        loadout_treeview.insert(parent='', index=i,
+                                values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
+                                tags=[loadouts.get_loadouts()[i]])
+        j = j + 1
 
 
 def reset():
@@ -136,58 +111,55 @@ def create_arts():
         label_loadout_art_num.pack_forget()
         loadouts_num_label.pack_forget()
         filter_after_create.pack(side='left', padx=5)
-        created_options['text'] = f'Создано по: {filter_on_create_var.get()}, внутренняя защита: {entry_defend.get()}%'
+        created_options['text'] = f'Создано по: {filter_on_create.get()}, внутренняя защита: {float(entry_defend.get())}%'
         created_options.pack(side='left')
         global filter_var
         global loadouts
         for row in loadout_treeview.get_children():
             loadout_treeview.delete(row)
-        if filter_on_create_var.get() == 'Сортировать по...':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+
+        loadouts = Loadouts(
+            create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
+                                       bool(filter_var.get()), defend=float(entry_defend.get())))
+
+        if filter_on_create.get() == 'Сортировать по...':
             loadouts.loadouts = loadouts.get_loadouts()
-        if filter_on_create_var.get() == 'Хп':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+
+        if filter_on_create.get() == 'Хп':
             loadouts.loadouts = loadouts.get_loadouts_by_health()
 
-        if filter_on_create_var.get() == 'Регенерация здоровья':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+        if filter_on_create.get() == 'Регенерация здоровья':
             loadouts.loadouts = loadouts.get_loadouts_by_health_regen()
 
-        if filter_on_create_var.get() == 'Эффективность лечения':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+        if filter_on_create.get() == 'Эффективность лечения':
             loadouts.loadouts = loadouts.get_loadouts_by_effective_regen()
 
-        if filter_on_create_var.get() == 'Пулестойкость':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+        if filter_on_create.get() == 'Пулестойкость':
             loadouts.loadouts = loadouts.get_loadouts_by_bullet_resistance()
 
-        if filter_on_create_var.get() == 'Выносливость':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+        if filter_on_create.get() == 'Выносливость':
             loadouts.loadouts = loadouts.get_loadouts_by_stamina()
 
-        if filter_on_create_var.get() == 'Скорость передвижения':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+        if filter_on_create.get() == 'Скорость передвижения':
             loadouts.loadouts = loadouts.get_loadouts_by_move_speed()
 
-        if filter_on_create_var.get() == 'Восстановление выносливости':
-            loadouts = Loadouts(
-                create_loadouts_from_combs(create_combs(arts_list, int(entry_loadout_art_num.get())),
-                                           bool(filter_var.get()), defend=int(entry_defend.get())))
+        if filter_on_create.get() == 'Восстановление выносливости':
             loadouts.loadouts = loadouts.get_loadouts_by_stamina_regen()
+
+        if filter_on_create.get() == 'Защита от пси-излучения':
+            loadouts.loadouts = loadouts.get_loadouts_by_psi_def()
+
+        if filter_on_create.get() == 'Защита от радиации':
+            loadouts.loadouts = loadouts.get_loadouts_by_rad_def()
+
+        if filter_on_create.get() == 'Защита от температуры':
+            loadouts.loadouts = loadouts.get_loadouts_by_temperature_def()
+
+        if filter_on_create.get() == 'Защита от биозаражения':
+            loadouts.loadouts = loadouts.get_loadouts_by_bio_def()
+
+        if filter_on_create.get() == 'Пси-излучение':
+            loadouts.loadouts = loadouts.get_loadouts_by_psi(defend=float(entry_defend.get()))
 
         del loadouts.loadouts[int(entry_loadouts_num.get()):len(loadouts.loadouts)]
         j = 1
@@ -307,49 +279,49 @@ def print_stats(stats_object):
             loadout_chemical_def.configure(foreground=stat_negative)
         info_chemical_def.set(f'Химзащита: {round(stats_object.get_chemical_def(), round_var)}')
         loadout_chemical_def.pack(fill='x')
-    if stats_object.get_cold(defend=int(entry_defend.get())) != 0:
-        if stats_object.get_cold(defend=int(entry_defend.get())) > 0.0:
-            info_cold.set(f'Холод: {round(stats_object.get_cold(defend=int(entry_defend.get())), round_var)} (-{int(entry_defend.get())}%)')
+    if stats_object.get_cold(defend=float(entry_defend.get())) != 0:
+        if stats_object.get_cold(defend=float(entry_defend.get())) > 0.0:
+            info_cold.set(f'Холод: {round(stats_object.get_cold(defend=float(entry_defend.get())), round_var)} (-{float(entry_defend.get())}%)')
             loadout_cold.configure(foreground=stat_negative)
             loadout_cold.pack(fill='x')
         else:
-            info_cold.set(f'Холод: {round(stats_object.get_cold(defend=int(entry_defend.get())), round_var)}')
+            info_cold.set(f'Холод: {round(stats_object.get_cold(defend=float(entry_defend.get())), round_var)}')
             loadout_cold.configure(foreground=stat_positive)
             loadout_cold.pack(fill='x')
-    if stats_object.get_bio(defend=int(entry_defend.get())) != 0:
-        if stats_object.get_bio(defend=int(entry_defend.get())) > 0.0:
-            info_bio.set(f'Биологическое заражение: {round(stats_object.get_bio(defend=int(entry_defend.get())), round_var)} (-{int(entry_defend.get())}%)')
+    if stats_object.get_bio(defend=float(entry_defend.get())) != 0:
+        if stats_object.get_bio(defend=float(entry_defend.get())) > 0.0:
+            info_bio.set(f'Биологическое заражение: {round(stats_object.get_bio(defend=float(entry_defend.get())), round_var)} (-{float(entry_defend.get())}%)')
             loadout_bio.configure(foreground=stat_negative)
             loadout_bio.pack(fill='x')
         else:
-            info_bio.set(f'Биологическое заражение: {round(stats_object.get_bio(defend=int(entry_defend.get())), round_var)}')
+            info_bio.set(f'Биологическое заражение: {round(stats_object.get_bio(defend=float(entry_defend.get())), round_var)}')
             loadout_bio.configure(foreground=stat_positive)
             loadout_bio.pack(fill='x')
-    if stats_object.get_psi(defend=int(entry_defend.get())) != 0:
-        if stats_object.get_psi(defend=int(entry_defend.get())) > 0.0:
-            info_psi.set(f'Пси-излучение: {round(stats_object.get_psi(defend=int(entry_defend.get())), round_var)} (-{int(entry_defend.get())}%)')
+    if stats_object.get_psi(defend=float(entry_defend.get())) != 0:
+        if stats_object.get_psi(defend=float(entry_defend.get())) > 0.0:
+            info_psi.set(f'Пси-излучение: {round(stats_object.get_psi(defend=float(entry_defend.get())), round_var)} (-{float(entry_defend.get())}%)')
             loadout_psi.configure(foreground=stat_negative)
             loadout_psi.pack(fill='x')
         else:
-            info_psi.set(f'Пси-излучение: {round(stats_object.get_psi(defend=int(entry_defend.get())), round_var)}')
+            info_psi.set(f'Пси-излучение: {round(stats_object.get_psi(defend=float(entry_defend.get())), round_var)}')
             loadout_psi.configure(foreground=stat_positive)
             loadout_psi.pack(fill='x')
-    if stats_object.get_temperature(defend=int(entry_defend.get())) != 0:
-        if stats_object.get_temperature(defend=int(entry_defend.get())) > 0.0:
-            info_temperature.set(f'Температура: {round(stats_object.get_temperature(defend=int(entry_defend.get())), round_var)} (-{int(entry_defend.get())}%)')
+    if stats_object.get_temperature(defend=float(entry_defend.get())) != 0:
+        if stats_object.get_temperature(defend=float(entry_defend.get())) > 0.0:
+            info_temperature.set(f'Температура: {round(stats_object.get_temperature(defend=float(entry_defend.get())), round_var)} (-{float(entry_defend.get())}%)')
             loadout_temperature.configure(foreground=stat_negative)
             loadout_temperature.pack(fill='x')
         else:
-            info_temperature.set(f'Температура: {round(stats_object.get_temperature(defend=int(entry_defend.get())), round_var)}')
+            info_temperature.set(f'Температура: {round(stats_object.get_temperature(defend=float(entry_defend.get())), round_var)}')
             loadout_temperature.configure(foreground=stat_positive)
             loadout_temperature.pack(fill='x')
-    if stats_object.get_rad(defend=int(entry_defend.get())) != 0:
-        if stats_object.get_rad(defend=int(entry_defend.get())) > 0.0:
-            info_rad.set(f'Радиация: {round(stats_object.get_rad(defend=int(entry_defend.get())), round_var)} (-{int(entry_defend.get())}%)')
+    if stats_object.get_rad(defend=float(entry_defend.get())) != 0:
+        if stats_object.get_rad(defend=float(entry_defend.get())) > 0.0:
+            info_rad.set(f'Радиация: {round(stats_object.get_rad(defend=float(entry_defend.get())), round_var)} (-{float(entry_defend.get())}%)')
             loadout_rad.configure(foreground=stat_negative)
             loadout_rad.pack(fill='x')
         else:
-            info_rad.set(f'Радиация: {round(stats_object.get_rad(defend=int(entry_defend.get())), round_var)}')
+            info_rad.set(f'Радиация: {round(stats_object.get_rad(defend=float(entry_defend.get())), round_var)}')
             loadout_rad.configure(foreground=stat_positive)
             loadout_rad.pack(fill='x')
     if stats_object.get_rad_resist() != 0:
@@ -526,8 +498,10 @@ window.resizable(False, False)
 
 # vars
 filter_vars = (
-    "Хп", "Регенерация здоровья", "Эффективность лечения", "Пулестойкость", "Выносливость", "Скорость передвижения",
-    "Восстановление выносливости")
+    "Хп", "Регенерация здоровья",
+    "Эффективность лечения", "Пулестойкость", "Выносливость", "Скорость передвижения",
+    "Восстановление выносливости", "Защита от пси-излучения", "Защита от радиации",
+    "Защита от температуры", "Защита от биозаражения", "Пси-излучение")
 filter_on_create_var = tk.StringVar()
 stat_negative = '#700000'
 stat_positive = '#028500'
@@ -536,7 +510,7 @@ loadouts = Loadouts([])
 round_var = 2
 font_var_default = ("Arial", 9)
 info_alert = tk.StringVar()
-info_alert.set('!: для 6 ячеек надо ~32гб оперативки')
+info_alert.set('!: для 6 ячеек надо ~32гб оперативки \n (у меня комп не тянет я не проверял)')
 info_artnames = tk.StringVar()
 info_health = tk.StringVar()
 info_health_regen = tk.StringVar()
@@ -576,14 +550,12 @@ rightbottom_labels = ttk.Frame(rightbottomframe)
 
 # widgets
 defend_label = ttk.Label(leftbottomframe, text='Внутренняя защита')
-entry_defend = ttk.Combobox(leftbottomframe, width=2, values=('0', '50', '55', '60', '85', '95'))
+entry_defend = ttk.Combobox(leftbottomframe, width=4, values=('0', '50', '55', '60', '85', '93.5'))
 filter_after_create = ttk.Combobox(lefttopframe, state='readonly', values=filter_vars, width=30)
 filter_after_create.set("Сортировать созданные по...")
-filter_on_create = ttk.OptionMenu(leftbottomframe, filter_on_create_var, "Сортировать по...", "Хп",
-                                  "Регенерация здоровья",
-                                  "Эффективность лечения", "Пулестойкость", "Выносливость", "Скорость передвижения",
-                                  "Восстановление выносливости")
-created_options = ttk.Label(righttopframe, text=f'Создано по: {filter_on_create_var.get()}')
+filter_on_create = ttk.Combobox(leftbottomframe, state='readonly', values=filter_vars, width=30)
+filter_on_create.set("Сортировать по...")
+created_options = ttk.Label(righttopframe, text=f'Создано по: {filter_on_create.get()}')
 sborki_label = ttk.Label(lefttopframe, text='Сборки')
 loadout_treeview = ttk.Treeview(leftbottomframe, columns=['loadouts'], show='headings')
 loadout_treeview.heading('loadouts', text='Сборки')
