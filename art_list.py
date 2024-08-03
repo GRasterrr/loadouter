@@ -1,5 +1,5 @@
 from Art import Art
-# https://support.exbo.net/ru/help-center/articles/16/2/490#mcetoc_1i2ctaqfi4v
+# https://support.exbo.net/ru/help-center/articles/16/2/490#mcetoc_1i2ctaqfi4v здесь новые названия
 pruzhina = Art("Пружина", effective_regen=8.7, rupture_reaction=3.6, rad=2.5)
 chastotniy_crystall = Art("Частотный кристалл", health=-8, stamina_regen=1.7, psi=-1.6, psi_def=30)
 bengalskiy_ogon = Art("Бенгальский огонь", stamina=11.1, move_speed=0.8, temperature=0.5)

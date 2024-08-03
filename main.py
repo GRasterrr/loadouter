@@ -83,6 +83,7 @@ def reset():
     defend_label.pack()
     entry_defend.pack()
     loadout_treeview.pack_forget()
+    loadout_treeview_scrollbar.pack_forget()
     filter_after_create.pack_forget()
     button_create.pack(side='left')
     entry_loadout_art_num.pack(side='left', padx=2)
@@ -101,6 +102,7 @@ def create_arts():
     try:
         alert.pack_forget()
         filter_on_create.pack_forget()
+        loadout_treeview_scrollbar.pack(side='right', fill='y')
         loadout_treeview.pack(fill='both', expand=True)
         entry_loadouts_num.pack_forget()
         entry_loadout_art_num.pack_forget()
@@ -168,6 +170,10 @@ def create_arts():
                                     values=[f'Сборка #{j} ({loadouts.get_loadouts()[i].get_artnames()})'],
                                     tags=[loadouts.get_loadouts()[i]])
             j = j + 1
+        if len(loadouts.loadouts) < int(entry_loadouts_num.get()):
+            info_alert.set("!: мужык мы не потянем ты хочешь слишком \nмного сборок.. \nвозможны технические шоколадки..")
+            alert.pack()
+
     except ValueError:
         info_alert.set(f'!: не указаны какие-то значения')
         alert.pack()
@@ -510,7 +516,7 @@ loadouts = Loadouts([])
 round_var = 2
 font_var_default = ("Arial", 9)
 info_alert = tk.StringVar()
-info_alert.set('!: для 6 ячеек надо ~32гб оперативки \n (у меня комп не тянет я не проверял)')
+info_alert.set('!: для 6 ячеек надо ~32гб оперативки \n(у меня комп не тянет я не проверял)')
 info_artnames = tk.StringVar()
 info_health = tk.StringVar()
 info_health_regen = tk.StringVar()
@@ -560,6 +566,8 @@ sborki_label = ttk.Label(lefttopframe, text='Сборки')
 loadout_treeview = ttk.Treeview(leftbottomframe, columns=['loadouts'], show='headings')
 loadout_treeview.heading('loadouts', text='Сборки')
 loadout_treeview.column('loadouts', width=222)
+loadout_treeview_scrollbar = ttk.Scrollbar(leftbottomframe, orient='vertical', command=loadout_treeview.yview)
+loadout_treeview.configure(yscrollcommand=loadout_treeview_scrollbar.set)
 arts_treeview = ttk.Treeview(rightbottomframe, columns=['arts'], show='headings')
 arts_treeview.heading('arts', text='Арты сборки')
 arts_treeview.column('arts', width=96)
